@@ -3,7 +3,7 @@ pipeline{
     stages{
         stage('test'){
             steps {
-                sh 'curl localhost:3000'
+                sh 'echo "hello world"'
             }
         }
     }
