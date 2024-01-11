@@ -6,7 +6,7 @@ pipeline {
     stage('Test') {
       steps {
         sh 'whoami'
-        sh 'docker images'
+        sh 'sudo docker images'
       }
     }
   }
