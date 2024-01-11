@@ -3,19 +3,28 @@ pipeline {
     label 'agent1'
   }
   stages {
-    stage('Test') {
+    stage('Build Docker Image') {
       steps {
-        sh 'ls -l'
-        sh 'whoami'
-        sh 'groups'
-        sh 'docker images'
+        sh 'docker build . -t node-hello-world:1.0.0'
+      }
+    }
+    stage('Build Docker Image') {
+      steps {
+        sh 'docker build . -t node-hello-world:1.0.0'
+      }
+    }
+    stage('Run Image') {
+      steps {
+        sh 'docker run -p 3000:3000 -d node-hello-world:1.0.0'
+        sh 'curl localhost:3000'
       }
     }
   }
     post{
 	always{
 	   sh 'docker ps'
-	   sh 'docker stop $(docker ps -a -q)'
+	   sh 'sudo docker rm $(sudo docker ps -aq)'
+       sh 'docker ps -a'
     }
     } 
 }
