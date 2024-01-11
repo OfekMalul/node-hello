@@ -1,9 +1,9 @@
-pipeline{
+pipeline {
     agent { dockerfile true }
-    stages{
-        stage('test'){
+    stages {
+        stage('Test') {
             steps {
-                sh 'echo "hello world"'
+                sh 'node --version'
             }
         }
     }
