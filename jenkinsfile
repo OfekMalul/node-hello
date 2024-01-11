@@ -12,7 +12,7 @@ pipeline {
       steps {
         sh 'docker run -p 3000:3000 -d node-hello-world:1.0.0'
         sh 'docker ps'
-        sh 'curl localhost:3000'
+        sh 'wget localhost:3000'
       }
     }
   }
