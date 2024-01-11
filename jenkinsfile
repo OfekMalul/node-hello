@@ -6,8 +6,13 @@ pipeline {
     stage('Test') {
       steps {
         sh 'ls -l'
-        sh 'sudo docker images'
+        sh 'docker images'
       }
     }
   }
+    post{
+	always{
+	   sh 'docker ps'
+	   sh 'docker stop $(docker ps -a -q)'
+    }
 }
