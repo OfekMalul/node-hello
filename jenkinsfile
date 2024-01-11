@@ -15,4 +15,5 @@ pipeline {
 	   sh 'docker ps'
 	   sh 'docker stop $(docker ps -a -q)'
     }
+    } 
 }
