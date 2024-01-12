@@ -7,6 +7,7 @@ pipeline {
     IMAGE_NAME = 'node-hello-world'
     IMAGE_TAG = '1.0.0'
     DOCKERHUB_CREDENTIALS = credentials('ofekmalul-dockerhub')
+    MINIKUBE_SERVER_CREDENTIALS = credentials('minikube-deploy-server')
     DOCKER_REPO = 'ofekmalul/leumi-home-assignment'
   }
   stages {
@@ -32,22 +33,14 @@ pipeline {
             docker push ${DOCKER_REPO}:1.0.0
         '''
       }
-
     }
-    // stage('Push to DockerHub') {
-    //   steps {
-    //     script{
-	// 		withCredentials([usernamePassword(credentialsId: 'ofekmalul-dockerhub', passwordVariable: 'PSWD', usernameVariable: 'LOGIN')]){
-    //             sh '''
-    //                docker tag ${IMAGE_NAME}:1.0.0 ${DOCKER_REPO}:1.0.0
-    //                echo ${PSWD} | sudo docker login -u ${LOGIN} --password-stdin
-    //                docker push ${DOCKER_REPO}:1.0.0
-    //             '''
-	// 		}
-	// 	}
-    //   }
-
-    // }
+    stage('Deployment'){
+        steps {
+            sh '''
+                ssh -o StrictHostKeyChecking=no -i $MINIKUBE_SERVER_CREDENTIALS_KEY MINIKUBE_SERVER_CREDENTIALS_USR@54.164.82.174 "ls -l" 
+            '''
+        }
+    }
   }
 
     post{
