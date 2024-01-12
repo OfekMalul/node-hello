@@ -39,7 +39,10 @@ pipeline {
             script{
 			withCredentials([sshUserPrivateKey(credentialsId:'minikube-deploy-server', keyFileVariable: 'KEY')]){
 					sh '''
-                    ssh -o StrictHostKeyChecking=no -i ${KEY} ubuntu@54.164.82.174 "ls -l"
+                    ssh -o StrictHostKeyChecking=no -i ${KEY} ubuntu@54.164.82.174 "
+                    ls -l
+                    echo "test"
+                    "
                     '''
 				}
 			}
