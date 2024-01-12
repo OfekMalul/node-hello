@@ -37,7 +37,7 @@ pipeline {
     stage('Deployment'){
         steps {
             sh '''
-                ssh -o StrictHostKeyChecking=no -i $MINIKUBE_SERVER_CREDENTIALS_KEY MINIKUBE_SERVER_CREDENTIALS_USR@54.164.82.174 "ls -l" 
+                ssh -o StrictHostKeyChecking=no -i $MINIKUBE_SERVER_CREDENTIALS_KEY ubuntu@54.164.82.174 "ls -l" 
             '''
         }
     }
