@@ -36,9 +36,13 @@ pipeline {
     }
     stage('Deployment'){
         steps {
-            sh '''
-                ssh -o StrictHostKeyChecking=no -i $MINIKUBE_SERVER_CREDENTIALS_KEY ubuntu@54.164.82.174 "ls -l" 
-            '''
+            script{
+			withCredentials([file(credentialsId:'minikube-deploy-server', variable: 'KEY')]){
+					sh '''
+                    ssh -o StrictHostKeyChecking=no -i ${KEY} ubuntu@54.164.82.174 "ls -l"
+                    '''
+				}
+			}
         }
     }
   }
