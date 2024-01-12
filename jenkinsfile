@@ -41,7 +41,7 @@ pipeline {
 					sh '''
                     scp -o StrictHostKeyChecking=no -i ${KEY} -r ./my-helm-chart ubuntu@54.164.82.174:/home/ubuntu/
                     ssh -o StrictHostKeyChecking=no -i ${KEY} ubuntu@54.164.82.174 "
-                        minikube kubctl -- get pods
+                        minikube kubectl -- get pods
                     "
                     '''
 				}
