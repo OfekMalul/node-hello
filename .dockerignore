@@ -1,1 +1,3 @@
 .docker-compose.yaml
+.my-helm-chart/*
+.nodejs-app-deployment.yaml

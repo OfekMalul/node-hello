@@ -39,9 +39,9 @@ pipeline {
             script{
 			withCredentials([sshUserPrivateKey(credentialsId:'minikube-deploy-server', keyFileVariable: 'KEY')]){
 					sh '''
-                    
+                    scp -o StrictHostKeyChecking=no -i ${KEY} -r ./my-helm-chart 
                     ssh -o StrictHostKeyChecking=no -i ${KEY} ubuntu@54.164.82.174 "
-                        kubctl get pods
+                        minikube kubctl -- get pods
                     "
                     '''
 				}
