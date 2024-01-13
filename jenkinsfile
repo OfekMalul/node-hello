@@ -32,7 +32,7 @@ pipeline {
         sh '''
             docker run -p 3000:3000 -d node-hello-world:$( echo $GIT_COMMIT | cut -c1-6 )
             wget localhost:3000
-            rm html.index.1
+            rm index.html.1
         '''
       }
     }
