@@ -1,17 +1,22 @@
+// Author : Ofek Malul
+// Date: 13/1/2024
+
 pipeline {
+  // Instructs Jenkins controller to use Specific Agent
   agent {
     label 'agent1'
   }
   
+  // Set environment variables to be used throughout the pipeline
   environment {
     IMAGE_NAME = 'node-hello-world'
     IMAGE_TAG = 'latest'
     DOCKERHUB_CREDENTIALS = credentials('ofekmalul-dockerhub')
-    MINIKUBE_SERVER_CREDENTIALS = credentials('minikube-deploy-server')
     DOCKER_REPO = 'ofekmalul/leumi-home-assignment'
   }
 
   stages {
+    // Build the docker image from provided docker file. Utilize SHA for versioning
     stage('Build Docker Image') {
       steps {
         sh '''
@@ -20,6 +25,7 @@ pipeline {
       }
     }
 
+    // Run image. Use get to see the website is reachable.
     stage('Run Image and check availability') {
       steps {
         sh '''
@@ -28,7 +34,10 @@ pipeline {
         '''
       }
     }
-      stage('Push to DockerHub') {
+
+    // Login to DockerHub via provided credentials on Jenkins controller.
+    // Push two images. One with tag Latest and one with SHA tag.
+    stage('Push to DockerHub') {
       steps {
         sh '''
             echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
@@ -38,13 +47,11 @@ pipeline {
             docker tag ${IMAGE_NAME}:$( echo $GIT_COMMIT | cut -c1-6 ) ${DOCKER_REPO}:$( echo $GIT_COMMIT | cut -c1-6 )
             docker push ${DOCKER_REPO}:$( echo $GIT_COMMIT | cut -c1-6 )
         '''
-        // sh '''
-        //     echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
-        //     docker tag ${IMAGE_NAME}:1.0.0 ${DOCKER_REPO}:1.0.0
-        //     docker push ${DOCKER_REPO}:1.0.0
-        // '''
       }
     }
+
+    // SSH to deployment server via provided credentials. 
+    // helm upgrade --install. If new Jenkins agent then it will install the helm chart. Else will upgrade the current helm chart.
     stage('Deployment'){
         steps {
             script{
@@ -64,7 +71,8 @@ pipeline {
   }
 
     post{
-
+        // Stopping and removing all docker containers, prevents resource usage.
+        // Removing all docker images to reduce storage usage.
 	    always{
             sh '''
                 docker stop $(sudo docker ps -q)
