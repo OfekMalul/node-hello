@@ -54,6 +54,9 @@ pipeline {
                     ssh -o StrictHostKeyChecking=no -i ${KEY} ubuntu@54.164.82.174 "
                         minikube kubectl -- get pods
                         helm upgrade --install my-helm-chart my-helm-chart
+                        minikube kubectl -- get pods
+                        minikube kubectl -- get svc
+                        minikube kubectl -- get deployments
                         helm ls
                     "
                     '''
