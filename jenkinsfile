@@ -10,9 +10,13 @@ pipeline {
     MINIKUBE_SERVER_CREDENTIALS = credentials('minikube-deploy-server')
     DOCKER_REPO = 'ofekmalul/leumi-home-assignment'
   }
+
+  def commitHash = sh(script: 'git rev-parse --short HEAD', returnstdout: true)
+  
   stages {
     stage('Build Docker Image') {
       steps {
+        sh 'echo $commitHash'
         sh 'docker build . -t node-hello-world:1.0.0'
       }
     }
@@ -43,6 +47,7 @@ pipeline {
                     ssh -o StrictHostKeyChecking=no -i ${KEY} ubuntu@54.164.82.174 "
                         minikube kubectl -- get pods
                         helm upgrade --install my-helm-chart my-helm-chart
+                        minikube kubectl -- port-forward svc/my-helm-chart --address 0.0.0.0 3000:3000
                         helm ls
                     "
                     '''
