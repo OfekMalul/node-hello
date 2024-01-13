@@ -26,11 +26,13 @@ pipeline {
     }
 
     // Run image. Use get to see the website is reachable.
+    // rm index, the wget creates an index file. There is no need for it.
     stage('Run Image and check availability') {
       steps {
         sh '''
             docker run -p 3000:3000 -d node-hello-world:$( echo $GIT_COMMIT | cut -c1-6 )
             wget localhost:3000
+            rm html.index.1
         '''
       }
     }
