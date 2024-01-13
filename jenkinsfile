@@ -6,6 +6,7 @@ pipeline {
   environment {
     IMAGE_NAME = 'node-hello-world'
     IMAGE_TAG = '1.0.0'
+    IMAGE_SHA = 'echo $GIT_COMMIT | cut -c1-6'
     DOCKERHUB_CREDENTIALS = credentials('ofekmalul-dockerhub')
     MINIKUBE_SERVER_CREDENTIALS = credentials('minikube-deploy-server')
     DOCKER_REPO = 'ofekmalul/leumi-home-assignment'
@@ -14,8 +15,8 @@ pipeline {
   stages {
     stage('Build Docker Image') {
       steps {
-        //commitHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true)
         sh 'echo $GIT_COMMIT'
+        sh 'echo $IMAGE_SHA'
         sh 'docker build . -t node-hello-world:1.0.0'
       }
     }
@@ -46,7 +47,6 @@ pipeline {
                     ssh -o StrictHostKeyChecking=no -i ${KEY} ubuntu@54.164.82.174 "
                         minikube kubectl -- get pods
                         helm upgrade --install my-helm-chart my-helm-chart
-                        minikube kubectl -- port-forward svc/my-helm-chart --address 0.0.0.0 3000:3000
                         helm ls
                     "
                     '''
