@@ -6,7 +6,6 @@ pipeline {
   environment {
     IMAGE_NAME = 'node-hello-world'
     IMAGE_TAG = '1.0.0'
-    IMAGE_SHA = 'echo $GIT_COMMIT | cut -c1-6'
     DOCKERHUB_CREDENTIALS = credentials('ofekmalul-dockerhub')
     MINIKUBE_SERVER_CREDENTIALS = credentials('minikube-deploy-server')
     DOCKER_REPO = 'ofekmalul/leumi-home-assignment'
@@ -15,9 +14,8 @@ pipeline {
   stages {
     stage('Build Docker Image') {
       steps {
-        env.IMAGE_SHA = 'echo $GIT_COMMIT | cut -c1-6'
-        sh 'echo $IMAGE_SHA'
-        sh 'docker build . -t node-hello-world:1.0.0'
+        sh 'docker build . -t node-hello-world:echo $GIT_COMMIT | cut -c1-6'
+        sh 'docker images'
       }
     }
 
