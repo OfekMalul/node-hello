@@ -53,6 +53,7 @@ pipeline {
                     scp -o StrictHostKeyChecking=no -i ${KEY} -r ./my-helm-chart ubuntu@54.164.82.174:/home/ubuntu/
                     ssh -o StrictHostKeyChecking=no -i ${KEY} ubuntu@54.164.82.174 "
                         minikube kubectl -- get pods
+                        minikube kubectl -- delete deployment my-helm-chart --namespace=default
                         helm upgrade --install my-helm-chart my-helm-chart
                         minikube kubectl -- get pods
                         minikube kubectl -- get svc
