@@ -57,6 +57,7 @@ pipeline {
             script{
 			withCredentials([sshUserPrivateKey(credentialsId:'minikube-deploy-server', keyFileVariable: 'KEY')]){
 					sh '''
+                    sed -i 's/tag: 'latest'/tag: $( echo $GIT_COMMIT | cut -c1-6 )/g' ./my-helm-chart/values.yaml
                     scp -o StrictHostKeyChecking=no -i ${KEY} -r ./my-helm-chart ubuntu@54.164.82.174:/home/ubuntu/
                     ssh -o StrictHostKeyChecking=no -i ${KEY} ubuntu@54.164.82.174 "
                         minikube kubectl -- delete deployment my-helm-chart --namespace=default
