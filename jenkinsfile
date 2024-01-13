@@ -52,12 +52,8 @@ pipeline {
 					sh '''
                     scp -o StrictHostKeyChecking=no -i ${KEY} -r ./my-helm-chart ubuntu@54.164.82.174:/home/ubuntu/
                     ssh -o StrictHostKeyChecking=no -i ${KEY} ubuntu@54.164.82.174 "
-                        minikube kubectl -- get pods
                         minikube kubectl -- delete deployment my-helm-chart --namespace=default
                         helm upgrade --install my-helm-chart my-helm-chart
-                        minikube kubectl -- get pods
-                        minikube kubectl -- get svc
-                        minikube kubectl -- get deployments
                         helm ls
                     "
                     '''
@@ -74,8 +70,7 @@ pipeline {
                 docker stop $(sudo docker ps -q)
                 sudo docker rm $(sudo docker ps -aq)
                 docker ps -a
-                docker rmi $(docker images -f "dangling=true" -q)
-                docker images
+                docker image prune --all
             '''
         }
 
