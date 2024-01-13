@@ -14,7 +14,7 @@ pipeline {
   stages {
     stage('Build Docker Image') {
       steps {
-        sh 'docker build . -t node-hello-world:echo $GIT_COMMIT | cut -c1-6'
+        sh 'docker build  -t node-hello-world:echo $GIT_COMMIT | cut -c1-6'
         sh 'docker images'
       }
     }
@@ -61,6 +61,8 @@ pipeline {
                 docker stop $(sudo docker ps -q)
                 sudo docker rm $(sudo docker ps -aq)
                 docker ps -a
+                docker rmi $(docker images -f "dangling=true" -q)
+                docker images
             '''
         }
 
