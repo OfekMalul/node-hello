@@ -14,8 +14,8 @@ pipeline {
   stages {
     stage('Build Docker Image') {
       steps {
-        commitHash = sh(script: 'git rev-parse --short HEAD', returnstdout: true)
-        sh 'echo $commitHash'
+        //commitHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true)
+        sh 'echo $GIT_BRANCH'
         sh 'docker build . -t node-hello-world:1.0.0'
       }
     }
