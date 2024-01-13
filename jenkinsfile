@@ -55,7 +55,6 @@ pipeline {
     // SSH to deployment server via provided credentials. 
     // sed goal is to change the static value of image to the latest image created during this pipeline.
     // helm upgrade --install. If new Jenkins agent then it will install the helm chart. Else will upgrade the current helm chart.
-    //minikube kubectl -- delete deployment my-helm-chart --namespace=default
     stage('Deployment'){
         steps {
             script{
