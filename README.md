@@ -7,7 +7,7 @@ This project implements a CI/CD pipeline for a simple NodeJS application. The pi
 ## Architecture
 
 The CI/CD pipeline integrates:
-![alt text](../Design_Overview.png)
+![alt text](./Design_Overview.png)
 
 - AWS EC2: Hosts dockerized application of the Jenkins server, Jenkins agent and Minikube.
 - Jenkins Server: Automate build and deployment processes.
