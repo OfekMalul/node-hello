@@ -22,3 +22,47 @@ The CI/CD pipeline integrates:
 - Install on Jenkins Controller docker
 - Install on Jenkins Agent docker and Java
 - Minikube, Docker and Helm on Minikube EC2 instance
+
+## Setup and Installation
+
+### AWS - utilized Ubuntu OS
+
+#### Jenkins Controller
+
+1. Resource minimum requirement - 4 GB Ram, 20 GB HD, 2 CPU.
+2. Port requirement: 50000 (communication between controller and agent), 8080, 22, 80.
+3. SSH key pair
+4. Install Docker and Docker compose. Please view this link for docker installation. https://docs.docker.com/engine/install/ubuntu/
+5. SCP the docker compose file
+6. Docker compose up -d
+
+### Jenkins Agent
+
+1. Resource minimum requirement - Up to the pipeline needs.
+2. Security group requirement - 80, 22, 50000
+3. SSH key pair
+4. Install Java
+5. Install docker + add ubuntu to the docker group.
+
+### Minikube
+
+1. Resource minimum requirement - 2 CPU, 2 GB RAM, 20 GB Storage
+2. Security group - 22, 80
+3. Install Docker
+4. Install minikube :
+   curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+   sudo install minikube-linux-amd64 /usr/local/bin/minikube
+5. Install helm:
+   wget https://get.helm.sh/helm-v3.13.3-linux-amd64.tar.gz
+   tar xvf helm-v3.13.3-linux-amd64.tar.gz
+   sudo mv linux-amd64/helm /usr/local/bin
+   rm helm-v3.13.3-linux-amd64.tar.gz
+   rm -rf linux-amd64
+   helm version
+
+### Github setup
+
+1. Fork wanted NodeJs project.
+2. Create webhook - settings -> webhook -> Create new webhook.
+   Under url provide your Jenkins controller ip + github-webhook. Ex http://your_jenkins_conrtoller_ip:8080/github-webhook/
+3. Chose the trigger event to start the pipeline
