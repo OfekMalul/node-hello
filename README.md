@@ -50,15 +50,19 @@ The CI/CD pipeline integrates:
 2. Security group - 22, 80
 3. Install Docker
 4. Install minikube :
+   ```sh
    curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
    sudo install minikube-linux-amd64 /usr/local/bin/minikube
+   ```
 5. Install helm:
+   ```sh
    wget https://get.helm.sh/helm-v3.13.3-linux-amd64.tar.gz
    tar xvf helm-v3.13.3-linux-amd64.tar.gz
    sudo mv linux-amd64/helm /usr/local/bin
    rm helm-v3.13.3-linux-amd64.tar.gz
    rm -rf linux-amd64
    helm version
+  ``
 
 ### Github setup
 
