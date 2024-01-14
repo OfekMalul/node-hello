@@ -81,7 +81,7 @@ pipeline {
                 docker stop $(sudo docker ps -q)
                 sudo docker rm $(sudo docker ps -aq)
                 docker ps -a
-                yes | docker image prune --all
+                docker image prune -f --all
             '''
         }
 
