@@ -1,11 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: { { .Values.service.name } }
+  name: {{ .Values.service.name }}
 spec:
-  type: { { .Values.service.type } }
+  type: {{ .Values.service.type }}
+  selector: 
+    app: {{ .Values.myLabel }}
   ports:
-    - port: { { .Values.service.port } }
-      targetPort: http
-      protocol: TCP
-  selector: { { .Values.myLabel } }
+    - protocol: TCP
+      port: {{ .Values.service.port}}
+      targetPort: {{ .Values.service.port}}

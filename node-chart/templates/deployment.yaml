@@ -1,20 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: { { .Values.myLabel } }
+  name: {{ .Values.myLabel }}
 spec:
-  replicas: { { .Values.replicaCount } }
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: { { .Values.myLabel } }
+      app: {{ .Values.myLabel }}
   template:
     metadata:
       labels:
-        app: { { .Values.myLabel } }
+        app: {{ .Values.myLabel }}
     spec:
       containers:
-        - name: { { .Values.myLabel } }
+        - name: {{ .Values.myLabel }}
           image: '{{ .Values.image.repository }}:{{ .Values.image.tag }}'
           ports:
-            containerPort: { { .Values.service.port } }
-            protocol: TCP
+            - containerPort: {{ .Values.service.port }}
