@@ -12,5 +12,5 @@ services:
       - '8080:8080' # Default port Jenkins is using
       - '50000:50000' # Port jenkins master and slave are communicating
     volumes:
-      - /home/ubuntu/jenkins_compose/jenkins_configuration:/var/jenkins_home
+      - /home/ubuntu/jenkins_compose/jenkins_configuration:/var/jenkins_home # Mount a volume from ec2 into the container
       - /var/run/docker.sock:/var/run/docker.sock # Enable docker socket connection to the docker daemon

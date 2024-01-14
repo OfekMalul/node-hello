@@ -32,7 +32,6 @@ pipeline {
         sh '''
             docker run -p 3000:3000 -d node-hello-world:$( echo $GIT_COMMIT | cut -c1-6 )
             wget localhost:3000 -O /dev/null
-            ls -l
         '''
       }
     }
