@@ -1,6 +1,6 @@
 # What did I change from template:
 # Repository
-# tag
+# tag - dynmically change in the jenkins pipeline according to commit hash.
 # Service - Loadbalacner
 # Port - 3000
 replicaCount: 3
